@@ -1,4 +1,4 @@
-# primrose
+# amrelive datalater
 
 Scripts to push
 [properly formatted](https://www.simoahava.com/analytics/enhanced-ecommerce-guide-for-google-tag-manager/#populate-the-data-layer)
@@ -26,8 +26,8 @@ ecommerce sites. These interactions include:
 4. `remove from cart` - the user removes a product from their cart.
 
 5. `checkout step(s)` - the user start any step of a checkout. For instance,
-   viewing the cart, shipping details, payment details, and approval would all
-   be different checkout steps.
+   viewing the cart, shipping details, payment details, and approval are all
+   different checkout steps.
 
 6. `purchase` - the user completes a transaction.
 
@@ -38,32 +38,45 @@ and the id, total, shipping, and tax for the entire transaction.
 
 ## installation
 
-### custom ecommerce sites
+The shopify and custom checkout pages will fire the interaction events in the
+datalayer that occur on their respective pages.
 
-Custom ecommerce sites, ie those not built Shopify, must add and update the
-javascript snippets for each interaction contained in the
-ecommerce-interactions-to-datalayer.
+### shopify - amrelive.com
 
-#### interaction scripts
+The [Shopify site](https://amrelieve.com/) should not install the interaction
+scripts individually. Instead, they should install gtm and datalayer snippet
+according to [these isntructions](https://github.com/kmclaugh/dataLayer-shopify)
+
+The shopify site will then fire these events:
+
+1. `product impressions` - the user views a product in a list. For instance, in
+   search results or catelogue pages
+
+2. `product detail view` - the user views the details of a product. For
+   instance, on a product details page.
+
+3. `add to cart` - the user adds a product to their cart.
+
+4. `checkout step 1` - the user views the first `/cart` checkout step.
+
+### custom checkout - checkout.amrelieve.com
+
+The custom checkout should add the javascript snippets for the following events:
+
+1. `checkout steps 2 & 3` - the user views the second `Contact Info` and third
+   `Payment Info` checkout steps.
+
+2. `purchase` - the user completes a transaction.
+
+3. `upsell` - the user purchases an upsell item.
+
+#### event scripts
 
 Each interaction script contains all required and optional data required for its
 respective enhanced ecommerce interaction.
 
 At the top of each script, you'll find a description of when to fire the
 interaction, required fields, and reference link.
-
-#### how to fire scripts
-
-Where and when these scripts should fire will depend on your site. For instance,
-the `product detail view` should fire whenever a user views the details of a
-product, which will likely be on the page load of the product's detail page.
-
-But the `add to cart` script should fire whenever a user adds something to the
-cart, which may occur on a button click on either the product's detail page or
-in a list of products.
-
-Each interaction script contains a qualitative description about when to fire
-the script that should easily map onto an user action on your site.
 
 #### filling in variables
 
@@ -73,7 +86,7 @@ requirements provided in inline comments. For instance, the
 `product detail view` requires a product id and is displayed in the script like
 so:
 
-```
+```json
 id: "{{ product.id }}", // 'P12345' // use product id not variant id
 ```
 
@@ -86,11 +99,3 @@ javascript implementation.
 
 Some interactions, such as the `checkout` and `purchase` should contain a list
 of all products in the cart
-
-## shopify
-
-Shopify sites should not install the interaction scripts individually. Instead,
-they should use the following:
-
-install gtm and datalayer snippet according to
-[these isntructions](https://github.com/kmclaugh/dataLayer-shopify)
