@@ -12,7 +12,6 @@ window.dataLayer.push({
       actionField: {
         step: "3",
         name: "Payment Info",
-        option: "{{checkout.payment_method}}", // Visa
       },
       products: [
         // include all products in the user's cart
